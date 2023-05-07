@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	GO_APPLICATION_ELF_PATH = "/home/cfc4n/project/go_uretprobe_demo/tests/tests"
+	GO_APPLICATION_ELF_PATH = "/home/cfc4n/project/go_uretprobe_demo/bin/demo"
 	COUNT_CC_SYMBOL         = "main.CountCC"
 )
 
