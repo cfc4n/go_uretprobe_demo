@@ -30,11 +30,9 @@ int uprobe_countcc(struct pt_regs *ctx)
     int num;
     num = (int)GO_PARAM1(ctx);
     bpf_printk("countCC :: num:%d, ret_num:%d\n", num);
-
     return 0;
 };
 
-// func CountCC(a int) int
 SEC("uretprobe/countcc")
 int uretprobe_countcc(struct pt_regs *ctx)
 {
