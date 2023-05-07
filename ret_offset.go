@@ -3,11 +3,13 @@ package main
 import (
 	"debug/elf"
 	"errors"
+	"fmt"
 	"golang.org/x/arch/x86/x86asm"
 )
 
 var (
-	ErrorGoBINNotFound  = errors.New("GO application not found")
+	// ErrorSymbolNotFound
+	//ErrorGoBINNotFound  = errors.New("GO application not found")
 	ErrorSymbolNotFound = errors.New("symbol not found")
 	ErrorNoRetFound     = errors.New("no RET instructions found")
 )
@@ -62,9 +64,10 @@ func findRetOffsets(elfPath, symbolName string) (offsets []int, err error) {
 // decodeInstruction Decode into assembly instructions and identify the RET instruction to return the offset.
 func decodeInstruction(instHex []byte) ([]int, error) {
 	var offsets []int
+	fmt.Println("assembly code of the hooked function:")
 	for i := 0; i < len(instHex); {
 		inst, err := x86asm.Decode(instHex[i:], 64)
-		//fmt.Println(inst.String())
+		fmt.Printf("%04X\t%s\n", i, inst.String())
 		if err != nil {
 			return nil, err
 		}

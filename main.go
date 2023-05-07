@@ -20,10 +20,11 @@ const (
 
 func main() {
 	var enable bool
-	flag.BoolVar(&enable, "e", false, "是否启用uprobe代替uretprobe，默认不启用。")
+	flag.BoolVar(&enable, "e", false, "Use uprobe+offset address instead of uretprobe, default:disabled ")
 	flag.Parse()
 
-	fmt.Printf("enable:%v\n", enable)
+	fmt.Println("Github repo : https://github.com/cfc4n/go_uretprobe_demo")
+	fmt.Printf("Use uprobe+offset address instead of uretprobe:%v\n", enable)
 	var sec = "uretprobe/countcc"
 	var ebpfFunc = "uretprobe_countcc"
 	var m = &manager.Manager{
