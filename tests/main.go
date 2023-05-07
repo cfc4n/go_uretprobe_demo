@@ -29,7 +29,7 @@ func CountCC(maxLevel int) (a int) {
 	fmt.Println(a)
 
 	a = recursion(0, maxLevel)
-	fmt.Println(a)
+	fmt.Printf("CountCC return :%d\n", a)
 	return a
 }
 

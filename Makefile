@@ -1,4 +1,4 @@
-all: build-ebpf build run
+all: build-ebpf build
 
 build-ebpf:
 	mkdir -p ebpf/bin
@@ -24,7 +24,4 @@ build-ebpf:
 
 build:
 	go build -gcflags="-N -l" -o bin/main .
-	go build -o ./tests/tests ./tests/
-
-run:
-	sudo bin/main -e
+	go build -gcflags="-N -l" -o ./tests/tests ./tests/
