@@ -30,7 +30,7 @@ clang -D__KERNEL__ -D__ASM_SYSREG_H \
 	-c -o - | llc -march=bpf -filetype=obj -o ebpf/bin/probe.o
 go run github.com/shuLhan/go-bindata/cmd/go-bindata -pkg main -prefix "ebpf/bin" -o "probe.go" "ebpf/bin/probe.o"
 go build -gcflags="-N -l" -o bin/main .
-go build -gcflags="-N -l" -o ./tests/tests ./tests/
+go build -gcflags="-N -l" -o bin/demo ./tests/
 ```
 
 #### 运行eBPF Hook程序
@@ -70,7 +70,7 @@ root@vm-server-2004:/home/cfc4n/project/go_uretprobe_demo# cat /sys/kernel/debug
 
 #### 运行被HOOK程序
 ```shell
-../go_uretprobe_demo/tests/tests
+./bin/demo
 NewTestFunc
 0
 CountCC return :51

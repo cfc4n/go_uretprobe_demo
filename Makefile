@@ -24,4 +24,4 @@ build-ebpf:
 
 build:
 	go build -gcflags="-N -l" -o bin/main .
-	go build -gcflags="-N -l" -o ./tests/tests ./tests/
+	go build -o bin/demo ./tests/
