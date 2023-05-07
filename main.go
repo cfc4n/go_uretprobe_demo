@@ -38,13 +38,13 @@ func main() {
 		},
 	}
 
-	// 查找ELF文件中被HOOk函数的符号表中，RET指令的偏移量
-	offsets, err := findRetOffsets(GO_APPLICATION_ELF_PATH, COUNT_CC_SYMBOL)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	if enable {
+		// 查找ELF文件中被HOOk函数的符号表中，RET指令的偏移量
+		offsets, err := findRetOffsets(GO_APPLICATION_ELF_PATH, COUNT_CC_SYMBOL)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		sec = "uprobe/countcc"
 		ebpfFunc = "uprobe_countcc"
 		m.Probes = m.Probes[:0] // 清空slice
