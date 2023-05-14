@@ -18,6 +18,8 @@ const (
 	COUNT_CC_SYMBOL         = "main.CountCC"
 )
 
+var asmCode string
+
 func main() {
 	var enable bool
 	flag.BoolVar(&enable, "e", false, "Use uprobe+offset address instead of uretprobe, default:disabled ")
@@ -44,6 +46,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		//
+		asmCodeDisplay()
 
 		sec = "uprobe/countcc"
 		ebpfFunc = "uprobe_countcc"
