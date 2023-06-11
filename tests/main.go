@@ -18,7 +18,7 @@ func recursion(level, maxLevel int) int {
 func NewTestFunc() int {
 	//nothing
 	print("NewTestFunc\n")
-	return 99
+	return 100
 }
 
 // uretprobe挂载的目标函数
@@ -37,7 +37,7 @@ func CountCC(maxLevel int) (a int) {
 }
 
 func main() {
-	var maxLevel = flag.Int("l", 50, "max recursion level")
+	var maxLevel = flag.Int("l", 100, "max recursion level")
 	flag.Parse()
 	for {
 		go CountCC(*maxLevel)

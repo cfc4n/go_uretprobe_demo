@@ -22,11 +22,15 @@ var asmCode string
 
 func main() {
 	var enable bool
+	var goAppPath string
 	flag.BoolVar(&enable, "e", false, "Use uprobe+offset address instead of uretprobe, default:disabled ")
+	flag.StringVar(&goAppPath, "g", "/home/cfc4n/project/go_uretprobe_demo/bin/demo", "ELF file compiled by the Go programming language.")
 	flag.Parse()
 
 	fmt.Println("Github repo : https://github.com/cfc4n/go_uretprobe_demo")
 	fmt.Printf("Use uprobe+offset address instead of uretprobe:%v\n", enable)
+	fmt.Printf("traced ELF file:%s\n", goAppPath)
+	fmt.Println("attach function:", COUNT_CC_SYMBOL)
 	var sec = "uretprobe/countcc"
 	var ebpfFunc = "uretprobe_countcc"
 	var m = &manager.Manager{
@@ -35,19 +39,26 @@ func main() {
 				Section:          sec,
 				EbpfFuncName:     ebpfFunc,
 				AttachToFuncName: COUNT_CC_SYMBOL,
-				BinaryPath:       GO_APPLICATION_ELF_PATH,
+				BinaryPath:       goAppPath,
 			},
 		},
 	}
 
 	if enable {
 		// 查找ELF文件中被HOOk函数的符号表中，RET指令的偏移量
-		offsets, err := findRetOffsets(GO_APPLICATION_ELF_PATH, COUNT_CC_SYMBOL)
+		offsets, err := findRetOffsets(goAppPath, COUNT_CC_SYMBOL)
 		if err != nil {
 			log.Fatal(err)
 		}
+		// dwarf
+		// for test
+		//dwarfList(goAppPath, COUNT_CC_SYMBOL)
+		//return
 		//
-		asmCodeDisplay()
+		err = asmCodeDisplay()
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		sec = "uprobe/countcc"
 		ebpfFunc = "uprobe_countcc"
@@ -59,7 +70,8 @@ func main() {
 					UprobeOffset:     uint64(offset),
 					EbpfFuncName:     ebpfFunc,
 					AttachToFuncName: COUNT_CC_SYMBOL,
-					BinaryPath:       GO_APPLICATION_ELF_PATH,
+					BinaryPath:       goAppPath,
+					UID:              fmt.Sprintf("%s_%d", ebpfFunc, offset),
 				})
 			log.Printf("Golang uretprobe hook %s [RET] at 0x%X\n", COUNT_CC_SYMBOL, offset)
 		}
