@@ -84,5 +84,6 @@ CountCC return :51
 
 ## 技术文章
 
-技术文章将在「榫卯江湖」微信公众号上发布。
+[golang uretprobe的崩溃原因与模拟实现](https://mp.weixin.qq.com/s/-LPlETem33rbL6zKomS-mQ)
+
 ![](https://image.cnxct.com/2022/03/wechat-white-search-no-alpha-1536x722.png)
